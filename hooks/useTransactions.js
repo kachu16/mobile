@@ -42,7 +42,7 @@ export const useTransactions = (userId) => {
 
         try {
             // can be run in parallel
-            await Promise.all(fetchTransaction(), fetchSummary());
+            await Promise.all([fetchTransaction(), fetchSummary()]);
 
             // await fetchTransaction();
             // await fetchSummary();
@@ -56,10 +56,11 @@ export const useTransactions = (userId) => {
 
     const deleteTransaction = async () => {
         try {
-            const response = await fetch(`${API_URL}/transactions/${id}`)
+            const response = await fetch(`${API_URL}/transactions/${id}`, {method : "DELETE"})
             if (!response.ok) throw new Error("Failed to delete transaction")
 
             // Refresh data after deletion
+            loadData();
             Alert.alert("Success", "Transaction deleted successfully!")
 
         } catch (error) {
