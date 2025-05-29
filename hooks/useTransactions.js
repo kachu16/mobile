@@ -3,7 +3,8 @@
 import { useCallback, useState } from "react"
 import { Alert } from "react-native"
 
-const API_URL = "http://localhost:5001/api";
+const API_URL = "https://budgetly-backend.onrender.com/api";
+// const API_URL = "http://localhost:5001/api";
 
 export const useTransactions = (userId) => {
     const [transactions, setTransactions] = useState([])
@@ -54,7 +55,7 @@ export const useTransactions = (userId) => {
         }
     }, [fetchTransaction, fetchSummary, userId])
 
-    const deleteTransaction = async () => {
+    const deleteTransaction = async (id) => {
         try {
             const response = await fetch(`${API_URL}/transactions/${id}`, {method : "DELETE"})
             if (!response.ok) throw new Error("Failed to delete transaction")
